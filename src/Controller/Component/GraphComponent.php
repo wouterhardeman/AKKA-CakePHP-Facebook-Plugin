@@ -274,7 +274,7 @@ class GraphComponent extends Component {
 	    /**
 	     * Queries database for existing Facebook Id
 	     */
-	    $queryFacebookId = $this->Users->find('all')->where(['facebook_id' => $this->FacebookId])->first();
+	    $queryFacebookId = $this->Users->find('all')->contain(['Roles'])->where(['facebook_id' => $this->FacebookId])->first();
 
 	    /**
 	     * Authenticates existing user into application
@@ -396,7 +396,10 @@ class GraphComponent extends Component {
      */
     protected function __autoLogin($result)
     {
-	$authUser = $this->Users->get($result->id)->toArray();
+	//$authUser = $this->Users->get($result->id)->toArray();
+	$authUser = $this->Users->find()
+			->contain(['Roles'])
+			->where(['Users.id' => $result->id]);
 
 	$this->Auth->setUser($authUser);
 	$this->Controller->redirect($this->_configs['post_login_redirect']);
