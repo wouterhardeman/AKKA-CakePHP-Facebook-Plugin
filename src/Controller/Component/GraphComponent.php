@@ -119,6 +119,13 @@ class GraphComponent extends Component {
      */
     public $FacebookEmail = null;
 
+	/**
+	 * Facebook User Profile Picture
+	 *
+	 * @var type String
+	 */
+	public $FacebookPicture = null;
+
     /**
      * Component Configuration
      * 
@@ -378,7 +385,8 @@ class GraphComponent extends Component {
 	    $this->_configs['user_columns']['last_name'] => $this->FacebookLastName,
 	    $this->_configs['user_columns']['password'] => $this->__randomPassword(),
 	    'facebook_id' => $this->FacebookId,
-	    'email' => $this->FacebookEmail
+	    'email' => $this->FacebookEmail,
+		'avatar_file' => 'https://graph.facebook.com/' . $this->FacebookId . '/picture'
 	];
 
 	$user = $this->Users->newEntity($data);
@@ -399,7 +407,8 @@ class GraphComponent extends Component {
 	//$authUser = $this->Users->get($result->id)->toArray();
 	$authUser = $this->Users->find()
 			->contain(['Roles'])
-			->where(['Users.id' => $result->id]);
+			->where(['Users.id' => $result->id])
+			->toArray();
 
 	$this->Auth->setUser($authUser);
 	$this->Controller->redirect($this->_configs['post_login_redirect']);
