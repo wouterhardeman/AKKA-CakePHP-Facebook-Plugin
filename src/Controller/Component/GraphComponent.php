@@ -119,13 +119,6 @@ class GraphComponent extends Component {
      */
     public $FacebookEmail = null;
 
-	/**
-	 * Facebook User Profile Picture
-	 *
-	 * @var type String
-	 */
-	public $FacebookPicture = null;
-
     /**
      * Component Configuration
      * 
